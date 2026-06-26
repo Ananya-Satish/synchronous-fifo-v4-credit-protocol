@@ -1,0 +1,90 @@
+# run 1000ns
+
+========== BASIC WRITE ==========
+T=25000 count=0 credits=8 wr_ptr=0 rd_ptr=0 write=1 read=0 data_in=aa data_out=00
+T=35000 count=1 credits=7 wr_ptr=1 rd_ptr=0 write=1 read=0 data_in=bb data_out=00
+T=45000 count=2 credits=6 wr_ptr=2 rd_ptr=0 write=1 read=0 data_in=cc data_out=00
+T=55000 count=3 credits=5 wr_ptr=3 rd_ptr=0 write=0 read=0 data_in=cc data_out=00
+T=65000 count=3 credits=5 wr_ptr=3 rd_ptr=0 write=0 read=0 data_in=cc data_out=00
+
+========== BASIC READ ==========
+T=75000 count=3 credits=5 wr_ptr=3 rd_ptr=0 write=0 read=0 data_in=cc data_out=00
+Reading mem[0] = aa
+T=85000 count=3 credits=5 wr_ptr=3 rd_ptr=0 write=0 read=1 data_in=cc data_out=00
+Reading mem[1] = bb
+T=95000 count=2 credits=6 wr_ptr=3 rd_ptr=1 write=0 read=1 data_in=cc data_out=aa
+Reading mem[2] = cc
+T=105000 count=1 credits=7 wr_ptr=3 rd_ptr=2 write=0 read=1 data_in=cc data_out=bb
+T=115000 count=0 credits=8 wr_ptr=3 rd_ptr=3 write=0 read=0 data_in=cc data_out=cc
+
+========== FILL FIFO ==========
+T=125000 count=0 credits=8 wr_ptr=3 rd_ptr=3 write=0 read=0 data_in=cc data_out=cc
+Credits = 8
+T=135000 count=0 credits=8 wr_ptr=3 rd_ptr=3 write=1 read=0 data_in=00 data_out=cc
+Credits = 7
+T=145000 count=1 credits=7 wr_ptr=4 rd_ptr=3 write=1 read=0 data_in=01 data_out=cc
+Credits = 6
+T=155000 count=2 credits=6 wr_ptr=5 rd_ptr=3 write=1 read=0 data_in=02 data_out=cc
+Credits = 5
+T=165000 count=3 credits=5 wr_ptr=6 rd_ptr=3 write=1 read=0 data_in=03 data_out=cc
+Credits = 4
+T=175000 count=4 credits=4 wr_ptr=7 rd_ptr=3 write=1 read=0 data_in=04 data_out=cc
+Credits = 3
+T=185000 count=5 credits=3 wr_ptr=0 rd_ptr=3 write=1 read=0 data_in=05 data_out=cc
+Credits = 2
+T=195000 count=6 credits=2 wr_ptr=1 rd_ptr=3 write=1 read=0 data_in=06 data_out=cc
+Credits = 1
+T=205000 count=7 credits=1 wr_ptr=2 rd_ptr=3 write=1 read=0 data_in=07 data_out=cc
+
+========== FIFO FULL ==========
+Credits = 0
+T=215000 count=8 credits=0 wr_ptr=3 rd_ptr=3 write=0 read=0 data_in=07 data_out=cc
+Attempted write when credits = 0
+
+========== READING DATA ==========
+T=225000 count=8 credits=0 wr_ptr=3 rd_ptr=3 write=0 read=0 data_in=55 data_out=cc
+Credits = 0
+Reading mem[3] = 00
+T=235000 count=8 credits=0 wr_ptr=3 rd_ptr=3 write=0 read=1 data_in=55 data_out=cc
+Credits = 1
+Reading mem[4] = 01
+T=245000 count=7 credits=1 wr_ptr=3 rd_ptr=4 write=0 read=1 data_in=55 data_out=00
+Credits = 2
+Reading mem[5] = 02
+T=255000 count=6 credits=2 wr_ptr=3 rd_ptr=5 write=0 read=1 data_in=55 data_out=01
+Credits = 3
+
+========== WRITING AFTER CREDITS RETURN ==========
+Reading mem[6] = 03
+T=265000 count=5 credits=3 wr_ptr=3 rd_ptr=6 write=0 read=1 data_in=55 data_out=02
+T=275000 count=4 credits=4 wr_ptr=3 rd_ptr=7 write=1 read=0 data_in=a1 data_out=03
+
+========== SIMULTANEOUS READ/WRITE ==========
+T=285000 count=5 credits=3 wr_ptr=4 rd_ptr=7 write=1 read=0 data_in=a2 data_out=03
+
+========== EMPTYING FIFO ==========
+Reading mem[7] = 04
+T=295000 count=6 credits=2 wr_ptr=5 rd_ptr=7 write=1 read=1 data_in=f0 data_out=03
+Reading mem[0] = 05
+T=305000 count=6 credits=2 wr_ptr=6 rd_ptr=0 write=0 read=1 data_in=f0 data_out=04
+Reading mem[1] = 06
+T=315000 count=5 credits=3 wr_ptr=6 rd_ptr=1 write=0 read=1 data_in=f0 data_out=05
+Reading mem[2] = 07
+T=325000 count=4 credits=4 wr_ptr=6 rd_ptr=2 write=0 read=1 data_in=f0 data_out=06
+Reading mem[3] = a1
+T=335000 count=3 credits=5 wr_ptr=6 rd_ptr=3 write=0 read=1 data_in=f0 data_out=07
+Reading mem[4] = a2
+T=345000 count=2 credits=6 wr_ptr=6 rd_ptr=4 write=0 read=1 data_in=f0 data_out=a1
+Reading mem[5] = f0
+T=355000 count=1 credits=7 wr_ptr=6 rd_ptr=5 write=0 read=1 data_in=f0 data_out=a2
+
+========== FINAL STATUS ==========
+Credits = 8
+Full    = 0
+Empty   = 1
+T=365000 count=0 credits=8 wr_ptr=6 rd_ptr=6 write=0 read=0 data_in=f0 data_out=f0
+T=375000 count=0 credits=8 wr_ptr=6 rd_ptr=6 write=0 read=0 data_in=f0 data_out=f0
+$finish called at time : 385 ns : File "D:/Vivaado_Projects/fifo_v4/fifo_v4.srcs/sim_1/new/fifov4_tb.sv" Line 185
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'fifov4_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:06 ; elapsed = 00:00:26 . Memory (MB): peak = 2399.445 ; gain = 0.000
